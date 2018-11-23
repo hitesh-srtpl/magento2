@@ -58,7 +58,10 @@ before_install:
   - ./dev/travis/before_install.sh
 install: composer install --no-interaction
 before_script: ./dev/travis/before_script.sh
+after_success:
+    - bash <(curl -s https://codecov.io/bash)
 script:
+  - vendor/bin/phpunit --coverage-clover=coverage.xml
   # Set arguments for variants of phpunit based tests; '|| true' prevents failing script when leading test fails
   - test $TEST_SUITE = "functional" && TEST_FILTER='dev/tests/functional/testsuites/Magento/Mtf/TestSuite/InjectableTests.php' || true
 
